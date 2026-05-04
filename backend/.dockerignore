@@ -1,0 +1,23 @@
+# Dependencies (Don't copy local node_modules, install them in the container)
+node_modules
+npm-debug.log
+
+# Build artifacts and logs
+dist
+build
+logs
+*.log
+
+# Environment secrets (Extremely important)
+.env
+.env.*
+
+# Git metadata
+.git
+.gitignore
+
+# Docker files (Optional, but cleaner)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
