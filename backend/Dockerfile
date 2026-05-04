@@ -15,6 +15,9 @@ RUN npm ci
 COPY backend ./backend
 COPY shared ./shared
 
+# Build shared package
+RUN npm run build --workspace=@secret-santa/shared
+
 WORKDIR /app/backend
 
 EXPOSE 5000
