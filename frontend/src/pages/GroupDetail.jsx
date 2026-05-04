@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 import Wishlist from '../components/Wishlist';
 import Chat from '../components/Chat';
+import { API_URL } from '../config';
 
 export default function GroupDetail() {
     const { id } = useParams();
@@ -18,7 +19,7 @@ export default function GroupDetail() {
 
     const fetchGroup = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/groups/${id}`);
+            const { data } = await axios.get(`${API_URL}/api/groups/${id}`);
             setGroup(data);
             if (data.status === 'matched') {
                 const pair = data.pairs.find(p => p.santa?._id === user._id);
@@ -31,7 +32,7 @@ export default function GroupDetail() {
 
     const handleDraw = async () => {
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/groups/${id}/draw`);
+            await axios.post(`${API_URL}/api/groups/${id}/draw`);
             toast.success('Pairs matched successfully!');
             fetchGroup();
         } catch (error) {

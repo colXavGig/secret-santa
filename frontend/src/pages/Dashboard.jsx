@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { PlusCircle, Users } from 'lucide-react';
+import { API_URL } from '../config';
 
 export default function Dashboard() {
     const [groups, setGroups] = useState([]);
@@ -15,7 +16,7 @@ export default function Dashboard() {
 
     const fetchGroups = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/groups`);
+            const { data } = await axios.get(`${API_URL}/api/groups`);
             setGroups(data);
         } catch (error) {
             toast.error('Failed to load groups');
@@ -25,7 +26,7 @@ export default function Dashboard() {
     const handleCreateGroup = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/groups`, { name: newGroupName });
+            await axios.post(`${API_URL}/api/groups`, { name: newGroupName });
             setNewGroupName('');
             fetchGroups();
             toast.success('Group created!');
@@ -37,7 +38,7 @@ export default function Dashboard() {
     const handleJoinGroup = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/groups/${joinGroupId}/join`);
+            await axios.post(`${API_URL}/api/groups/${joinGroupId}/join`);
             setJoinGroupId('');
             fetchGroups();
             toast.success('Joined group!');

@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSocket } from '../contexts/SocketContext';
 import { Plus } from 'lucide-react';
+import { API_URL } from '../config';
 
 export default function Wishlist({ groupId, userId, isOwn }) {
     const [items, setItems] = useState([]);
@@ -26,7 +27,7 @@ export default function Wishlist({ groupId, userId, isOwn }) {
 
     const fetchWishlist = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/wishlists/${groupId}/${userId}`);
+            const { data } = await axios.get(`${API_URL}/api/wishlists/${groupId}/${userId}`);
             setItems(data);
         } catch (error) {
             console.error(error);
@@ -36,7 +37,7 @@ export default function Wishlist({ groupId, userId, isOwn }) {
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/wishlists/${groupId}`, newItem);
+            const { data } = await axios.post(`${API_URL}/api/wishlists/${groupId}`, newItem);
             setItems([...items, data]);
             setNewItem({ name: '', description: '', link: '' });
             toast.success('Item added!');

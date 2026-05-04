@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const AuthContext = createContext();
 
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/me`);
+            const { data } = await axios.get(`${API_URL}/api/auth/me`);
             setUser(data);
         } catch (error) {
             localStorage.removeItem('token');
@@ -32,14 +33,14 @@ export const AuthProvider = ({ children }) => {
     };
 
     const login = async (email, password) => {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login`, { email, password });
+        const { data } = await axios.post(`${API_URL}/api/auth/login`, { email, password });
         localStorage.setItem('token', data.token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
         setUser(data);
     };
 
     const register = async (email, username, password, confirmPassword) => {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/register`, { email, username, password, confirmPassword });
+        const { data } = await axios.post(`${API_URL}/api/auth/register`, { email, username, password, confirmPassword });
         localStorage.setItem('token', data.token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
         setUser(data);

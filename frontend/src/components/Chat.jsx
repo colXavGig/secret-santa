@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useSocket } from '../contexts/SocketContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Send } from 'lucide-react';
+import { API_URL } from '../config';
 
 export default function Chat({ groupId, receiverId, title }) {
     const [messages, setMessages] = useState([]);
@@ -35,7 +36,7 @@ export default function Chat({ groupId, receiverId, title }) {
 
     const fetchMessages = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/messages/${groupId}/${receiverId}`);
+            const { data } = await axios.get(`${API_URL}/api/messages/${groupId}/${receiverId}`);
             setMessages(data);
         } catch (error) {
             console.error(error);
@@ -46,7 +47,7 @@ export default function Chat({ groupId, receiverId, title }) {
         e.preventDefault();
         if (!newMessage.trim()) return;
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/messages/${groupId}/${receiverId}`, { message: newMessage });
+            const { data } = await axios.post(`${API_URL}/api/messages/${groupId}/${receiverId}`, { message: newMessage });
             setMessages([...messages, data]);
             setNewMessage('');
         } catch (error) {
